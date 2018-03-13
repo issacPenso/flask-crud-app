@@ -1,1 +1,1 @@
-web: gunicorn flask-crud-app:bookmanager --log-file=-
+web: gunicorn app:bookmanager --log-file=-
