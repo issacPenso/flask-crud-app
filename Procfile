@@ -1,1 +1,1 @@
-web: gunicorn bookmanager:bookmanager --log-file=-
+web: gunicorn bookmanager:app --log-file=-
