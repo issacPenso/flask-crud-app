@@ -1,33 +1,36 @@
 <html>
-  <body>
-    <h1>Add book</h1>
-    <form method="POST" action="/">
-      <input type="text" name="title">
-      <input type="submit" value="Add">
-    </form>
+<body>
+<h1>Add book</h1>
+<form method="POST" enctype="multipart/form-data" action="/">
+    <input type="text" name="title">
+    <input type="file" name="img">
+    <input type="submit" value="Add">
+</form>
 
-    <h1>Books</h1>
-    <table>
-      {% for book in books %}
-        <tr>
-          <td>
-            {{book.title}}
-          </td>
-          <td>
-            <form method="POST" action="./update" style="display: inline">
-              <input type="hidden" value="{{book.title}}" name="oldtitle">
-              <input type="text" value="{{book.title}}" name="newtitle">
-              <input type="submit" value="Update">
+<h1>Books</h1>
+<table>
+    {% for book in books %}
+    <tr>
+        <td>
+            <strong>{{book.title}}</strong>
+            <img src="{{url_for('get_book_image_url', book_title=book.title)}}">
+        </td>
+        <td>
+            <form method="POST" enctype=multipart/form-data action="./update" style="display: inline">
+                <input type="hidden" value="{{book.title}}" name="oldtitle">
+                <input type="text" value="{{book.title}}" name="newtitle">
+                <input type="file" value="{{book.img}}" name="img">
+                <input type="submit" value="Update">
             </form>
-          </td>
-          <td>
+        </td>
+        <td>
             <form method="POST" action="./delete" style="display: inline">
-              <input type="hidden" value="{{book.title}}" name="title">
-              <input type="submit" value="Delete">
+                <input type="hidden" value="{{book.title}}" name="title">
+                <input type="submit" value="Delete">
             </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  </body>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
 </html>
