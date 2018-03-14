@@ -7,19 +7,17 @@ from flask import request
 from flask import redirect
 from flask import send_file
 from flask import url_for
-from sqlalchemy_imageattach.context import store_context
-# from werkzeug.utils import secure_filename
 
 from flask_sqlalchemy import SQLAlchemy
 
 UPLOAD_FOLDER = '/path/to/the/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-# database_file = 'postgres://drzkyzgd:UbG7pFA7U7wdVQ1B4P5opG8l6J5wU3RH@elmer.db.elephantsql.com:5432/drzkyzgd'
+database_file = 'postgres://drzkyzgd:UbG7pFA7U7wdVQ1B4P5opG8l6J5wU3RH@elmer.db.elephantsql.com:5432/drzkyzgd'
 
 
-project_dir = os.path.dirname(os.path.abspath(__file__))
-database_file = 'sqlite:///{}'.format(os.path.join(project_dir, 'bookdatabase.db'))
+# project_dir = os.path.dirname(os.path.abspath(__file__))
+# database_file = 'sqlite:///{}'.format(os.path.join(project_dir, 'bookdatabase.db'))
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_file
