@@ -61,8 +61,9 @@ def update():
         newtitle = request.form.get('newtitle')
         oldtitle = request.form.get('oldtitle')
         book = Books.query.filter_by(title=oldtitle).first()
-        img = request.files['img']
-        book.img = img.read()
+        img = request.files.get('img')
+        if img:
+            book.img = img.read()
         book.title = newtitle
         db.session.commit()
     except Exception as e:
