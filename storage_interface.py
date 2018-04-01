@@ -1,22 +1,21 @@
 import abc
 
 
-class storageInterface(object):
+class StorageInterface(object):
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def upload(self, file, filename):
+    def create(self, book_title, img_file):
         return
 
     @abc.abstractmethod
-    def read(self, filename):
+    def read(self, book_title):
         return
 
     @abc.abstractmethod
-    def update(self, file, filename):
+    def update(self, book_title, img_file):
         return
 
     @abc.abstractmethod
-    def getUrl(self):
+    def delete(self, book_title):
         return
-
