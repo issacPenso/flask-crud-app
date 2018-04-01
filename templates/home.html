@@ -1,5 +1,27 @@
 <html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
 <body>
+<table>
+
+</table>
 <h1>Add book</h1>
 <form method="POST" enctype="multipart/form-data" action="/">
     <input type="text" name="title">
@@ -9,11 +31,17 @@
 
 <h1>Books</h1>
 <table>
+    <tr>
+        <th>Title</th>
+        <th>Cover</th>
+        <th>Update Book</th>
+        <th>Delete</th>
+    </tr>
     {% for book in books %}
     <tr>
+        <td> <strong>{{book.title}}</strong></td>
         <td>
-            <strong>{{book.title}}</strong>
-            <img src="{{url_for('get_book_image_url', book_title=book.title)}}" height="66" width="66">
+            <img src="{{url_for('get_book_image_url', book_title=book.title, last_img_update_timestamp=book.last_img_update_timestamp)}}" height="66" width="66">
         </td>
         <td>
             <form method="POST" enctype=multipart/form-data action="./update" style="display: inline">
@@ -32,5 +60,13 @@
     </tr>
     {% endfor %}
 </table>
+
+<script>
+function getTimestamp() {
+    var d = new Date();
+    return d.getTime();
+}
+</script>
+
 </body>
 </html>
