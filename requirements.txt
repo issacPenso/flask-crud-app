@@ -4,3 +4,4 @@ gunicorn
 psycopg2
 azure_common
 azure_storage_blob
+azure_storage_file
