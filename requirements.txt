@@ -1,4 +1,6 @@
-Flask==0.12.2
-SQLAlchemy==1.2.5
-Flask_SQLAlchemy==2.3.2
-azure_common==1.1.8
+Flask_SQLAlchemy
+Flask
+gunicorn
+psycopg2
+azure_common
+azure_storage_blob
