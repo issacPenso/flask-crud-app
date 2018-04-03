@@ -31,7 +31,7 @@ tr:nth-child(even) {
         <select name="storage_type">
             <option value="local">local</option>
             <option value="db">db</option>
-            <option value="cloud">cloud</option>
+            <option value="azure">azure</option>
         </select>
         <input type="submit" value="Add">
     </form>
@@ -50,7 +50,11 @@ tr:nth-child(even) {
     <tr>
         <td> <strong>{{book.title}}</strong></td>
         <td>
-            <img src="{{url_for('get_book_image_url', book_title=book.title, last_img_update_timestamp=book.last_img_update_timestamp)}}" height="66" width="66">
+            {% if book.storage_type !='azure' %}
+                <img src="{{url_for('get_book_image_url', book_title=book.title, last_img_update_timestamp=book.last_img_update_timestamp if book.last_img_update_timestamp else 'empty')}}" height="66" width="66">
+            {% else %}
+                <img src="{{azure_storage.read('{}-{}'.format(book.title, book.last_img_update_timestamp))}}" height="66" width="66">
+            {% endif %}
         </td>
         <td>
             <form method="POST" enctype=multipart/form-data action="./update" style="display: inline">

@@ -19,3 +19,7 @@ class StorageInterface(object):
     @abc.abstractmethod
     def delete(self, book_title):
         return
+
+    @abc.abstractmethod
+    def rename(self, book_title):
+        return
