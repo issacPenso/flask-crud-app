@@ -1,7 +1,7 @@
 import os
 import time
 
-from flask import Flask
+from flask import Flask, jsonify, json
 from flask import render_template
 from flask import request
 from flask import redirect
@@ -13,14 +13,13 @@ from azure_storage import AzureStorageImpl
 from db_storage import DbStorageImpl
 from local_storage import LocalStorageImpl
 
-database_file = 'postgres://drzkyzgd:UbG7pFA7U7wdVQ1B4P5opG8l6J5wU3RH@elmer.db.elephantsql.com:5432/drzkyzgd'
+# database_file = 'postgres://drzkyzgd:UbG7pFA7U7wdVQ1B4P5opG8l6J5wU3RH@elmer.db.elephantsql.com:5432/drzkyzgd'
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 # database_file = 'sqlite:///{}'.format(os.path.join(project_dir, 'bookdatabase.db'))
 
-#database_file = 'postgres://postgres:radware@localhost:5432/temp'
-
+database_file = 'postgres://postgres:radware@localhost:5432/temp'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_file
@@ -57,6 +56,7 @@ def home():
     if request.form:
         try:
             img = request.files.get('img')
+            title = request.form.get('title')
             book = Books(title=request.form.get('title'), img=None,
                          last_img_update_timestamp=time.time() if img else None,
                          storage_type=request.form.get('storage_type'))
@@ -141,6 +141,22 @@ def get_book_image_url(book_title, last_img_update_timestamp=None):
     else:
         return send_from_directory(IMAGES, 'na-image.png')
 
+
+@app.route('/api/is-book-title-valid', methods=['GET'])
+def is_book_title_valid():
+    title = request.args.get('title')
+    if not title:
+        return jsonify({'status': False, 'reason': 'book title can not be empty or None'})
+    else:
+        book = Books.query.filter_by(title=title).first()
+        if book:
+            return jsonify({'status': False, 'reason': 'book with the same title already exist'})
+    return jsonify({'status': True, 'reason': ''})
+
+
+@app.route('/api/test', methods=['GET'])
+def test_api():
+    return jsonify({'msg': 'test_api'})
 
 if __name__ == '__main__':
     app.run(debug=True)

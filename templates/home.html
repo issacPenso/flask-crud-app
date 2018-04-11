@@ -1,6 +1,8 @@
 <html>
 <head>
-<style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/home.js"></script>
+    <style>
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -16,27 +18,29 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
-</style>
+
+
+    </style>
 </head>
 <body>
 <table>
 
 </table>
 <h1>Add New Book</h1>
-<table>
-    <tr>
-    <form method="POST" enctype="multipart/form-data" action="/">
-        <input type="text" name="title">
-        <input type="file" name="img" accept="image/*">
-        <select name="storage_type">
-            <option value="local">local</option>
-            <option value="db">db</option>
-            <option value="azure">azure</option>
-        </select>
-        <input type="submit" value="Add">
-    </form>
-    <tr>
-</table>
+<form name="addBook" method="POST" enctype="multipart/form-data" action="/" onsubmit="return validateForm()">
+    <label>Book Title:</label>
+    <input type="text" name="title" /><br>
+    <div id="add_book_submit_msg"></div>
+    <label>Cover Image:</label>
+    <input type="file" name="img" accept="image/*" /><br>
+    <label>Choose Storage Type:</label>
+    <select name="storage_type">
+        <option value="local">local</option>
+        <option value="db">db</option>
+        <option value="azure">azure</option>
+    </select><br>
+    <input type="submit" value="Add" />
+</form>
 <h1>Books Table</h1>
 <table>
     <tr>
@@ -48,39 +52,33 @@ tr:nth-child(even) {
     </tr>
     {% for book in books %}
     <tr>
-        <td> <strong>{{book.title}}</strong></td>
+        <td><strong>{{book.title}}</strong></td>
         <td>
             {% if book.storage_type !='azure' %}
-                <img src="{{url_for('get_book_image_url', book_title=book.title, last_img_update_timestamp=book.last_img_update_timestamp if book.last_img_update_timestamp else 'empty')}}" height="66" width="66">
+            <img src="{{url_for('get_book_image_url', book_title=book.title, last_img_update_timestamp=book.last_img_update_timestamp if book.last_img_update_timestamp else 'empty')}}"
+                 height="66" width="66">
             {% else %}
-                <img src="{{azure_storage.read('{}-{}'.format(book.title, book.last_img_update_timestamp))}}" height="66" width="66">
+            <img src="{{azure_storage.read('{}-{}'.format(book.title, book.last_img_update_timestamp))}}" height="66"
+                 width="66">
             {% endif %}
         </td>
         <td>
             <form method="POST" enctype=multipart/form-data action="./update" style="display: inline">
-                <input type="hidden" value="{{book.title}}" name="oldtitle">
-                <input type="text" value="{{book.title}}" name="newtitle">
-                <input type="file" value="{{book.img}}" name="img" accept="image/*">
+                <input type="hidden" value="{{book.title}}" name="oldtitle" />
+                <input type="text" value="{{book.title}}" name="newtitle" />
+                <input type="file" value="{{book.img}}" name="img" accept="image/*" />
                 <input type="submit" value="Update">
             </form>
         </td>
         <td><strong>{{book.storage_type}}</strong></td>
         <td>
             <form method="POST" action="./delete" style="display: inline">
-                <input type="hidden" value="{{book.title}}" name="title">
-                <input type="submit" value="Delete">
+                <input type="hidden" value="{{book.title}}" name="title" />
+                <input type="submit" value="Delete" />
             </form>
         </td>
     </tr>
     {% endfor %}
 </table>
-
-<script>
-function getTimestamp() {
-    var d = new Date();
-    return d.getTime();
-}
-</script>
-
 </body>
 </html>
