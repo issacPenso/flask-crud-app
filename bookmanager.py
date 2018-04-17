@@ -13,13 +13,13 @@ from azure_storage import AzureStorageImpl
 from db_storage import DbStorageImpl
 from local_storage import LocalStorageImpl
 
-#database_file = 'postgres://drzkyzgd:UbG7pFA7U7wdVQ1B4P5opG8l6J5wU3RH@elmer.db.elephantsql.com:5432/drzkyzgd'
+database_file = 'postgres://drzkyzgd:UbG7pFA7U7wdVQ1B4P5opG8l6J5wU3RH@elmer.db.elephantsql.com:5432/drzkyzgd'
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 # database_file = 'sqlite:///{}'.format(os.path.join(project_dir, 'bookdatabase.db'))
 
-database_file = 'postgres://postgres:radware@localhost:5432/temp'
+#database_file = 'postgres://postgres:radware@localhost:5432/temp'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_file
