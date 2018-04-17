@@ -2,6 +2,15 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="static/js/home.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.js"></script>
+    <script src="https://codemirror.net/2/mode/velocity/velocity.js"></script>
     <style>
 table {
     font-family: arial, sans-serif;
@@ -27,7 +36,7 @@ tr:nth-child(even) {
 
 </table>
 <h1>Add New Book</h1>
-<form name="addBook" method="POST" enctype="multipart/form-data" action="/" onsubmit="return validateForm()">
+<form name="addBookForm" method="POST" enctype="multipart/form-data" action="/" onsubmit="return validateForm()">
     <label>Book Title:</label>
     <input type="text" name="title" /><br>
     <div id="add_book_submit_msg"></div>
@@ -41,6 +50,9 @@ tr:nth-child(even) {
     </select><br>
     <input type="submit" value="Add" />
 </form>
+<label>Search Book:</label>
+<input name="search_term" id="search_term" >
+<div id="search_result"></div>
 <h1>Books Table</h1>
 <table>
     <tr>

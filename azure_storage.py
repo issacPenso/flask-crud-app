@@ -1,5 +1,6 @@
 from azure.storage.blob import BlockBlobService
 from azure.storage.file import ContentSettings
+from azure.common import AzureMissingResourceHttpError
 
 from storage_interface import StorageInterface
 
@@ -34,4 +35,10 @@ class AzureStorageImpl(StorageInterface):
             self.delete(old_file_name)
 
     def delete(self, file_name):
-        block_blob_service.delete_blob(MY_CONTAINER, file_name)
+        blob_props = None
+        try:
+            blob_props = block_blob_service.get_blob_properties(MY_CONTAINER, file_name)
+        except AzureMissingResourceHttpError:
+            pass
+        if blob_props:
+            block_blob_service.delete_blob(MY_CONTAINER, file_name)
